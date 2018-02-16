@@ -1,7 +1,9 @@
 package com.example.op.sms;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,11 +11,27 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    SharedPreferences mPrefs;
+    final String splashScreenPref= "SplashScreenShown";
     Button call1,sms1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+
+        Boolean splashScreenShown= mPrefs.getBoolean("f", false);
+
+       /* if (splashScreenShown==false) {
+            Intent intent=new Intent(MainActivity.this,SplashScreen.class);
+            startActivity(intent);
+
+            SharedPreferences.Editor editor = mPrefs.edit();
+            editor.putBoolean("f",true);
+            editor.commit();
+            finish();
+        }*/
         call1=(Button)findViewById(R.id.btnCall1);
         sms1=(Button)findViewById(R.id.btnSms1);
         call1.setOnClickListener(this);
@@ -52,4 +70,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
 }
