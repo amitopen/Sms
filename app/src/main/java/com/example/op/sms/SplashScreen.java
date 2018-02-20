@@ -28,7 +28,8 @@ public class SplashScreen extends Activity {
     LinearLayout dotsLayout;
     ViewPagerAdapter viewPagerAdapter;
     Button skip,next;
-    private Integer[] layouts = {R.layout.custom_layout, R.layout.layout2};
+    private  int currentPage;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,13 +40,14 @@ public class SplashScreen extends Activity {
         skip=(Button)findViewById(R.id.btnSkip);
         dotsLayout=(LinearLayout)findViewById(R.id.layoutDots);
 
-        introManager = new IntroManager(this);
+       /* introManager = new IntroManager(this);
         if (!introManager.check()) {
             introManager.setFirst(false);
             Intent intent = new Intent(SplashScreen.this, MainActivity.class);
             startActivity(intent);
             finish();
         }
+        */
 
         /*final Animation an = AnimationUtils.loadAnimation(getBaseContext(),R.anim.rotate);
 
@@ -70,51 +72,52 @@ public class SplashScreen extends Activity {
 
             }
         });*/
-        addBootomDots(0);
-        viewPagerAdapter = new ViewPagerAdapter();
-        viewPager.setAdapter(viewPagerAdapter);
-        viewPager.addOnPageChangeListener(vListener);
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SplashScreen.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int current = getItem();
-                if (current<layouts.length)
-                {
-                    viewPager.setCurrentItem(current);
-                }
-                else
-                {
+            addBootomDots(0);
+            viewPagerAdapter = new ViewPagerAdapter(getBaseContext());
+            viewPager.setAdapter(viewPagerAdapter);
+            viewPager.addOnPageChangeListener(vListener);
+            skip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
                     Intent intent = new Intent(SplashScreen.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 }
-            }
-        });
+            });
+            next.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+                    if (currentPage == 0) {
+                        getItem();
+
+                    } else {
+                        Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            });
+
     }
-    private int getItem()
+    private void getItem()
     {
-        return viewPager.getCurrentItem() + 1;
+
+        viewPager.setCurrentItem(currentPage+1);
     }
 
     public void addBootomDots(int position) {
-            dots = new TextView[layouts.length];
+            dots = new TextView[3];
             int[] colorActive = getResources().getIntArray(R.array.dot_active);
             int[] colorInActive = getResources().getIntArray(R.array.dot_inactive);
             dotsLayout.removeAllViews();
             for(int i=0;i<dots.length;i++)
             {
                 dots[i] =new TextView(this);
-                dots[i].setText(Html.fromHtml("o"));
-                dots[i].setTextSize(25);
-                dots[i].setTextColor(colorInActive[position]);
+                dots[i].setText(Html.fromHtml("&#8226"));
+                dots[i].setTextSize(35);
+                dots[i].setTextColor(getResources().getColor(R.color.colorTransparentWhite));
                 dotsLayout.addView(dots[i]);
             }
             if (dots.length>0)
@@ -130,18 +133,21 @@ public class SplashScreen extends Activity {
         @Override
         public void onPageSelected(int position) {
                 addBootomDots(position);
-                if (position==layouts.length-1)
-                {
-                    next.setText("Proceed");
-                    skip.setVisibility(View.GONE);
-                }
-                else
-                    {
-                    next.setText("Next");
-                    skip.setVisibility(View.VISIBLE);
-                    }
+                currentPage=position;
 
-        }
+            if (position==dots.length -1)
+            {
+                next.setText("Proceed");
+                skip.setVisibility(View.GONE);
+            }
+
+            else {
+                next.setText("Next");
+                skip.setVisibility(View.VISIBLE);
+            }
+            }
+
+
 
         @Override
         public void onPageScrollStateChanged(int state) {
@@ -155,52 +161,12 @@ public class SplashScreen extends Activity {
         Toast.makeText(this, "splash screen destroyed", Toast.LENGTH_SHORT).show();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("first_time", true);
+        editor.putBoolean("first", true);
         editor.commit();
+
     }
 
 
 //
 
-    public class ViewPagerAdapter extends PagerAdapter {
-        private LayoutInflater layoutInflater;
-
-
-        public ViewPagerAdapter() {
-
-        }
-
-
-        @Override
-        public int getCount() {
-            return layouts.length;
-        }
-
-        @Override
-        public boolean isViewFromObject(View v, Object object) {
-            return v == object;
-        }
-
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = layoutInflater.inflate(layouts[position], container, false);
-            //ImageView imageView = (ImageView) view.findViewById(R.id.imageView2);
-            // imageView.setImageResource(images[position]);
-
-            //ViewPager vp = (ViewPager)container;
-            container.addView(view, 0);
-
-            return view;
-        }
-
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-
-            View view = (View) object;
-            container.removeView(view);
-        }
-    }
 }

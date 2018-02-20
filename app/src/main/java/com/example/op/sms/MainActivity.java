@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Boolean splashScreenShown= mPrefs.getBoolean("f", false);
 
-       /* if (splashScreenShown==false) {
+        if (splashScreenShown=false) {
             Intent intent=new Intent(MainActivity.this,SplashScreen.class);
             startActivity(intent);
 
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             editor.putBoolean("f",true);
             editor.commit();
             finish();
-        }*/
+        }
         call1=(Button)findViewById(R.id.btnCall1);
         sms1=(Button)findViewById(R.id.btnSms1);
         call1.setOnClickListener(this);
