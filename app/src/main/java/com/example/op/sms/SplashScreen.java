@@ -89,8 +89,9 @@ public class SplashScreen extends Activity {
                 public void onClick(View view) {
 
 
-                    if (currentPage == 0) {
-                        getItem();
+                    if (viewPager.getCurrentItem() >viewPagerAdapter.nextSlide(0))
+                    {
+                        viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
 
                     } else {
                         Intent intent = new Intent(SplashScreen.this, MainActivity.class);
@@ -139,6 +140,7 @@ public class SplashScreen extends Activity {
             {
                 next.setText("Proceed");
                 skip.setVisibility(View.GONE);
+
             }
 
             else {

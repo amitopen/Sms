@@ -2,6 +2,7 @@ package com.example.op.sms;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,7 @@ import android.view.ViewGroup;
 public class ViewPagerAdapter extends PagerAdapter {
     private LayoutInflater layoutInflater;
     Context context;
-
+    ViewPager viewPager;
     private Integer[] layouts = {R.layout.custom_layout, R.layout.layout2,R.layout.layout3};
     public int[] slide_images={R.drawable.me,R.drawable.nu,R.drawable.amith};
     public String [] slide_headings = {"eat","sleep","wake"};
@@ -42,7 +43,12 @@ public class ViewPagerAdapter extends PagerAdapter {
 
         return view;
     }
+    public int nextSlide(int next)
+    {
+        int next_slide =  layouts.length;
 
+        return next_slide;
+    }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {

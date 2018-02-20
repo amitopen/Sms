@@ -18,14 +18,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 
         Boolean splashScreenShown= mPrefs.getBoolean("f", false);
 
-        if (splashScreenShown=false) {
+        if (splashScreenShown==false) {
             Intent intent=new Intent(MainActivity.this,SplashScreen.class);
             startActivity(intent);
 
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             editor.commit();
             finish();
         }
+        setContentView(R.layout.activity_main);
         call1=(Button)findViewById(R.id.btnCall1);
         sms1=(Button)findViewById(R.id.btnSms1);
         call1.setOnClickListener(this);
