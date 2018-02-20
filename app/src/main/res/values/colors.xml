@@ -4,4 +4,31 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorBackground">#23cfb5</color>
+
+    <color name="dotDarkScren1">#c2185b</color>
+    <color name="dotDarkScren2">#303F9F</color>
+    <color name="dotDarkScren3">#FF4081</color>
+    <color name="dotDarkScren4">#23cfb5</color>
+
+    <color name="dotlightScren1">#eccdd9</color>
+    <color name="dotlightScren2">#e3e5ef</color>
+    <color name="dotlightScren3">#eac2d0</color>
+    <color name="dotlightScren4">#d9eae8</color>
+    
+    <array name="dot_active">
+        <item>@color/dotlightScren1</item>
+        <item>@color/dotlightScren2</item>
+        <item>@color/dotlightScren3</item>
+        <item>@color/dotlightScren4</item>
+    </array>
+
+    <array name="dot_inactive">
+        <item>@color/dotDarkScren1</item>
+        <item>@color/dotDarkScren2</item>
+        <item>@color/dotDarkScren3</item>
+        <item>@color/dotDarkScren4</item>
+    </array>
+
+
 </resources>
+
